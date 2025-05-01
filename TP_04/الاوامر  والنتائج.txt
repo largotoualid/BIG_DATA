@@ -1,0 +1,137 @@
+PS D:\TP_BIG> docker build -t largotoualid/tp3project:v1 .
+[+] Building 189.7s (11/11) FINISHED                                                                docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                0.1s
+ => => transferring dockerfile: 676B                                                                                0.0s
+ => [internal] load metadata for docker.io/library/python:3.9-slim                                                  3.0s
+ => [auth] library/python:pull token for registry-1.docker.io                                                       0.0s
+ => [internal] load .dockerignore                                                                                   0.1s
+ => => transferring context: 2B                                                                                     0.0s
+ => [1/5] FROM docker.io/library/python:3.9-slim@sha256:9aa5793609640ecea2f06451a0d6f379330880b413f954933289cf3b2  13.4s
+ => => resolve docker.io/library/python:3.9-slim@sha256:9aa5793609640ecea2f06451a0d6f379330880b413f954933289cf3b27  0.0s
+ => => sha256:8a628cdd7ccc83e90e5a95888fcb0ec24b991141176c515ad101f12d6433eb96 28.23MB / 28.23MB                    3.9s 
+ => => sha256:74018f7cfa8f2965fd86b13c38f71417bc846e071a5f5bb5ae569ccb5a6e7248 3.51MB / 3.51MB                      3.9s 
+ => => sha256:a0b0cfc480ce03c723a597904bcfbf28c71438c689e6d5097c2332835f67a40c 14.93MB / 14.93MB                    4.7s 
+ => => sha256:9aa5793609640ecea2f06451a0d6f379330880b413f954933289cf3b27a78567 10.41kB / 10.41kB                    0.0s 
+ => => sha256:d6e2ddca278e1b84c1a934ca8f07bbbfe6b6ec936a0b68107c862769f66734fa 1.75kB / 1.75kB                      0.0s 
+ => => sha256:501f96d59d707efd12df137b6d001069e83068678ef241ca5bdaf05882636b79 5.29kB / 5.29kB                      0.0s 
+ => => sha256:97d21b95fb00ac3b08975ab6f8709f3a7e35a05d75e2f9a70fa95348279dac27 250B / 250B                          4.1s 
+ => => extracting sha256:8a628cdd7ccc83e90e5a95888fcb0ec24b991141176c515ad101f12d6433eb96                           5.7s 
+ => => extracting sha256:74018f7cfa8f2965fd86b13c38f71417bc846e071a5f5bb5ae569ccb5a6e7248                           0.6s 
+ => => extracting sha256:a0b0cfc480ce03c723a597904bcfbf28c71438c689e6d5097c2332835f67a40c                           2.4s 
+ => => extracting sha256:97d21b95fb00ac3b08975ab6f8709f3a7e35a05d75e2f9a70fa95348279dac27                           0.0s 
+ => [internal] load build context                                                                                 117.5s 
+ => => transferring context: 3.95GB                                                                               117.4s 
+ => [2/5] RUN apt-get update && apt-get install -y     python3-tk     && rm -rf /var/lib/apt/lists/*               25.1s 
+ => [3/5] WORKDIR /app                                                                                              0.1s 
+ => [4/5] COPY . .                                                                                                 22.0s 
+ => [5/5] RUN pip install --no-cache-dir -r requirements.txt                                                       34.5s 
+ => exporting to image                                                                                             12.2s 
+ => => exporting layers                                                                                            12.1s 
+ => => writing image sha256:339bb17cf89b26e9ef03c70831afd99e3d453b04bf680ecc41b4629b05656a47                        0.0s 
+ => => naming to docker.io/largotoualid/tp3project:v1                                                               0.0s 
+PS D:\TP_BIG> docker login
+Authenticating with existing credentials... [Username: largotoualid]
+
+i Info → To login with a different account, run 'docker logout' followed by 'docker login'
+
+
+Login Succeeded
+PS D:\TP_BIG> docker push largotoualid/tp3project:v1                                                                     
+The push refers to repository [docker.io/largotoualid/tp3project]                                                        
+b4653a11f49a: Pushed
+ff6395df12c2: Pushed
+24da9f728c86: Pushed
+74c30757f942: Pushed
+7ad524989e4f: Mounted from library/python
+e0cc49235ebd: Mounted from library/python
+185439f46b41: Mounted from library/python
+ea680fbff095: Mounted from library/python
+v1: digest: sha256:a89ed8e5a68f52d5c31c9f0cbbe66b1fd3ce13ced25c85ea80bea871b1d7c170 size: 2002
+
+PS D:\TP_BIG> docker run --rm -it -v D:\TP_BIG:/app -v D:\tpp:/data largotoualid/tp3project:v1 python clean_and_save.py
+ تم تنظيف البيانات وحفظها في الملف: 2019-Oct-Cleaned.csv
+PS D:\TP_BIG> docker run --rm -it -v D:\TP_BIG:/app largotoualid/tp3project:v1 python analyze_data.py
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 26534110 entries, 0 to 26534109
+Data columns (total 9 columns):
+ #   Column         Dtype
+---  ------         -----
+ 0   event_time     object
+ 1   event_type     object
+ 2   product_id     int64
+ 3   category_id    int64
+ 4   category_code  object
+ 5   brand          object
+ 6   price          float64
+ 7   user_id        int64
+ 8   user_session   object
+dtypes: float64(1), int64(3), object(5)
+memory usage: 1.8+ GB
+None
+         product_id   category_id         price       user_id
+count  2.653411e+07  2.653411e+07  2.653411e+07  2.653411e+07
+mean   5.369829e+06  2.055726e+18  3.528803e+02  5.339187e+08
+std    8.352505e+06  1.572607e+16  3.811349e+02  1.859313e+07
+min    1.000978e+06  2.053014e+18  8.800000e-01  3.386938e+07
+25%    1.004856e+06  2.053014e+18  1.081100e+02  5.159850e+08
+50%    1.600527e+06  2.053014e+18  2.185100e+02  5.304304e+08
+75%    5.100337e+06  2.053014e+18  4.591600e+02  5.521559e+08
+max    6.050001e+07  2.173217e+18  2.574070e+03  5.662807e+08
+✅ تم تحليل البيانات بنجاح
+PS D:\TP_BIG> docker network create tp3-network
+2e9cfc8ec9389501e81716868e8213994808a1566406ff3783fea914518b8a8c
+
+PS D:\TP_BIG> docker run -d --name tp3-container1 --network tp3-network -v D:\TP_BIG:/app -v D:\tpp:/data -p 8081:80 largotoualid/tp3project:v1
+e9633834424ec9b339e876b86210417ff2a39d50afc68f7cd7d570232b428841
+PS D:\TP_BIG> docker run -d --name tp3-container2 --network tp3-network -v D:\TP_BIG:/app -v D:\tpp:/data -p 8082:80 largotoualid/tp3project:v1
+e69779eb03aa5b90e1caaf979f3710596040565b5ef3868c69e9b2bce50cec28
+PS D:\TP_BIG> docker run -d --name tp3-container3 --network tp3-network -v D:\TP_BIG:/app -v D:\tpp:/data -p 8083:80 largotoualid/tp3project:v1
+5ef7558df581aeb3a25b19e7baeb5030552c4f96dba98e7a0b9007607a6d4f0a
+
+PS D:\TP_BIG> docker ps
+CONTAINER ID   IMAGE                        COMMAND                  CREATED          STATUS          PORTS              
+    NAMES
+5ef7558df581   largotoualid/tp3project:v1   "python analyze_data…"   37 seconds ago   Up 36 seconds   0.0.0.0:8083->80/tcp   tp3-container3
+e69779eb03aa   largotoualid/tp3project:v1   "python analyze_data…"   44 seconds ago   Up 43 seconds   0.0.0.0:8082->80/tcp   tp3-container2
+e9633834424e   largotoualid/tp3project:v1   "python analyze_data…"   55 seconds ago   Up 54 seconds   0.0.0.0:8081->80/tcp   tp3-container1
+
+PS D:\TP_BIG> docker run -d --name tp3-container1 --network tp3-network alpine sleep 300
+50ca281d64390acf6f25bb120d3d15a408fd55bd53928af6c62853e9a3cacc39
+PS D:\TP_BIG> docker run -d --name tp3-container2 --network tp3-network alpine sleep 300
+9dfef0c8c93e8908455f995dd0c8b0198dbcbc25c957bb2d5b8ce15c6d600e40
+PS D:\TP_BIG> docker run -d --name tp3-container3 --network tp3-network alpine sleep 300
+06e407c84333a4dd5cd7492707f76e4349608eab43b2536511201f03d71bf810
+PS D:\TP_BIG> docker exec -it tp3-container1 ping tp3-container2
+PING tp3-container2 (172.18.0.3): 56 data bytes
+64 bytes from 172.18.0.3: seq=0 ttl=64 time=1.233 ms
+64 bytes from 172.18.0.3: seq=1 ttl=64 time=0.057 ms
+64 bytes from 172.18.0.3: seq=2 ttl=64 time=0.104 ms
+64 bytes from 172.18.0.3: seq=3 ttl=64 time=0.072 ms
+64 bytes from 172.18.0.3: seq=4 ttl=64 time=0.079 ms
+64 bytes from 172.18.0.3: seq=5 ttl=64 time=0.095 ms
+64 bytes from 172.18.0.3: seq=6 ttl=64 time=0.105 ms
+64 bytes from 172.18.0.3: seq=7 ttl=64 time=0.058 ms
+64 bytes from 172.18.0.3: seq=8 ttl=64 time=0.098 ms
+64 bytes from 172.18.0.3: seq=9 ttl=64 time=0.092 ms
+64 bytes from 172.18.0.3: seq=10 ttl=64 time=0.070 ms
+64 bytes from 172.18.0.3: seq=11 ttl=64 time=0.087 ms
+64 bytes from 172.18.0.3: seq=12 ttl=64 time=0.055 ms
+64 bytes from 172.18.0.3: seq=13 ttl=64 time=0.078 ms
+64 bytes from 172.18.0.3: seq=14 ttl=64 time=0.082 ms
+64 bytes from 172.18.0.3: seq=15 ttl=64 time=0.073 ms
+64 bytes from 172.18.0.3: seq=16 ttl=64 time=0.074 ms
+64 bytes from 172.18.0.3: seq=17 ttl=64 time=0.077 ms
+64 bytes from 172.18.0.3: seq=18 ttl=64 time=0.080 ms
+64 bytes from 172.18.0.3: seq=19 ttl=64 time=0.077 ms
+64 bytes from 172.18.0.3: seq=20 ttl=64 time=0.065 ms
+64 bytes from 172.18.0.3: seq=21 ttl=64 time=0.087 ms
+64 bytes from 172.18.0.3: seq=22 ttl=64 time=0.072 ms
+64 bytes from 172.18.0.3: seq=91 ttl=64 time=0.069 ms
+64 bytes from 172.18.0.3: seq=98 ttl=64 time=0.060 ms
+64 bytes from 172.18.0.3: seq=99 ttl=64 time=0.090 ms
+
+^C
+--- tp3-container2 ping statistics ---
+113 packets transmitted, 113 packets received, 0% packet loss
+round-trip min/avg/max = 0.053/0.090/1.233 ms
+PS D:\TP_BIG>
