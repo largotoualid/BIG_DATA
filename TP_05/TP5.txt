@@ -1,0 +1,38 @@
+1.انشاء قاعدة بيانات
+use info
+
+2.انشاء مجموعة produits و اضافة مستندات 
+
+*اضافة اول منتج
+db.produits.insertOne({
+  nom: "Macbook Pro",
+  fabriquant: "Apple",
+  prix: 11435.99,
+  options: ["Intel Core i5", "Retina Display", "Long life battery"]
+})
+*إضافة ثاني منتج
+db.produits.insertOne({
+  nom: "Macbook Air",
+  fabriquant: "Apple",
+  prix: 125794.73,
+  ultrabook: true,
+  options: ["Intel Core i7", "SSD", "Long life battery"]
+})
+ * إضافة ثالث منتج
+db.produits.insertOne({
+  nom: "Thinkpad X230",
+  fabriquant: "Lenovo",
+  prix: 114358.74,
+  ultrabook: true,
+  options: ["Intel Core i5", "SSD", "Long life battery"]
+})
+
+
+
+
+*حذف المنتجات المصنعة  من طرف apple
+يكون يدوي بالضغط على حذف بجانب كل منتج
+
+*حذف Thinkpad X230من طرف id
+يكون يدوي بالضغط على الحذف بجانب كل منتج
+
